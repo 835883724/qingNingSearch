@@ -4,8 +4,8 @@
   <div class="timeBox curp">{{ state.currentTime }}</div>
   <div class="contentBox">
     <div class="searchBox" :class=" state.inputFlag ? 'inputActived':''">
-      <el-icon :size="20" class="ml20 iconCls" :class="state.iconShow? 'iconShow':''">
-        <Platform />
+      <el-icon :size="20" class="ml20 iconCls" :class="state.iconShow? 'iconShow':''" @click="state.showDialog=true">
+        <PictureFilled />
       </el-icon>
       <input type="text" class="inputCls" :placeholder=" state.inputFlag ?'':'搜索'" @click="changeFlag(e)" v-model="state.inputValue">
       <el-icon :size="20" class="mr20 iconCls" :class="state.iconShow? 'iconShow':''">
@@ -13,25 +13,35 @@
       </el-icon>
     </div>
   </div>
+  <div class="searchSuggest" :class="state.inputValue.length>0&& state.showDialog==false? 'suggestChange':''">
+    <div>我草泥马</div>
+    <div>123</div>
+    <div>123</div>
+  </div>
   <div class="footer">
     <span class="textItem"> 闽ICP备16025935号-2 </span> |
     <span class="textItem">闽公网安备35010202001376号</span>
   </div>
+
+  <dailogCmp v-model:showDialog="state.showDialog"></dailogCmp>
+
 </template>
 
 <script  setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import dayjs from 'dayjs'
+import dailogCmp from './dailogCmp.vue'
 
 const state = reactive({
   inputFlag: false,
   iconShow: false,
   currentTime: '',
   timer: null,
-  inputValue: ''
+  inputValue: '',
+  showDialog: false
 })
 const listenClick = e => {
-  console.log(typeof e.target.className, 222)
+  // console.log(typeof e.target.className, 222)
   if (typeof e.target.className == `object`) {
     return
   } else if (e.target.className?.includes(`container`)) {
@@ -56,7 +66,7 @@ onUnmounted(() => {
 })
 const updateTime = () => {
   state.currentTime = dayjs().format('HH:mm')
-  console.log(state.currentTime)
+  // console.log(state.currentTime)
 }
 const changeFlag = e => {
   state.inputFlag = true
@@ -64,7 +74,7 @@ const changeFlag = e => {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 html,
 body,
 #app {
@@ -78,7 +88,7 @@ body,
   object-fit: cover;
   background-image: url('@/assets/day1Bg.jpg');
   background-size: 100% 100%;
-  transition: 0.25s;
+  transition: 0.3s;
 }
 .contentBox {
   position: fixed;
@@ -96,11 +106,11 @@ body,
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: width 0.5s ease 0s;
+  transition: width 0.3s ease 0s;
   &:hover {
     width: 500px;
     background: rgba($color: #fff, $alpha: 0.7);
-    transition: width 0.5s ease 0s;
+    transition: width 0.3s ease 0s;
     input::-webkit-input-placeholder {
       color: #878b8d;
     }
@@ -127,18 +137,18 @@ body,
   text-shadow: 3px;
   &:hover {
     font-size: 52px;
-    transition: 0.5s;
+    transition: 0.3s;
   }
 }
 .inputActived {
   width: 500px;
   background: rgba($color: #fff, $alpha: 0.7);
-  transition: width 0.5s ease 0s;
+  transition: width 0.3s ease 0s;
 }
 .contanierShadow {
   filter: blur(10px);
   transform: scale(1.1);
-  transition: 0.25s;
+  transition: 0.3s;
 }
 .iconCls {
   padding: 5px;
@@ -148,7 +158,7 @@ body,
 }
 .iconShow {
   visibility: visible;
-  transition: 0.5s;
+  transition: 0.3s;
   &:hover {
     background: #fff;
   }
@@ -169,6 +179,47 @@ body,
       color: #fff;
     }
   }
+}
+.searchSuggest {
+  visibility: hidden;
+  z-index: 40;
+  position: absolute;
+  top: 270px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  max-width: 80%;
+  height: auto;
+  font-size: small;
+  overflow-y: hidden;
+  border-radius: 15px;
+  -webkit-backdrop-filter: blur(30px) saturate(1.25);
+  backdrop-filter: blur(30px) saturate(1.25);
+  opacity: 0; /* 开始时透明度为0 */
+  transition: opacity 0.3s ease-in-out; /* 设置透明度变化的过渡效果 */
+  & div {
+    display: -webkit-box;
+    // -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    clear: both;
+    height: 30px;
+    padding-right: 10px;
+    text-indent: 20px;
+    line-height: 30px;
+    cursor: pointer;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    transition: 0.3s;
+    &:hover {
+      text-indent: 30px;
+      background: #aab7c5;
+    }
+  }
+}
+.suggestChange {
+  visibility: visible;
+  opacity: 1;
 }
 
 input::-webkit-input-placeholder {
