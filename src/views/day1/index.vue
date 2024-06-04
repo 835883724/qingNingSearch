@@ -12,12 +12,13 @@
         <Search />
       </el-icon>
     </div>
+    <div class="searchSuggest" :class="state.inputValue.length>0&& state.showDialog==false? 'suggestChange':''">
+      <div>我草泥马</div>
+      <div>123</div>
+      <div>123</div>
+    </div>
   </div>
-  <div class="searchSuggest" :class="state.inputValue.length>0&& state.showDialog==false? 'suggestChange':''">
-    <div>我草泥马</div>
-    <div>123</div>
-    <div>123</div>
-  </div>
+
   <div class="footer">
     <span class="textItem"> 闽ICP备16025935号-2 </span> |
     <span class="textItem">闽公网安备35010202001376号</span>
@@ -147,7 +148,7 @@ body,
 }
 .contanierShadow {
   filter: blur(10px);
-  transform: scale(1.1);
+  transform: scale(1.05);
   transition: 0.3s;
 }
 .iconCls {
@@ -184,11 +185,11 @@ body,
   visibility: hidden;
   z-index: 40;
   position: absolute;
-  top: 270px;
+  top: 120%;
   left: 50%;
   transform: translateX(-50%);
-  width: 500px;
-  max-width: 80%;
+  width: 100%;
+  max-width: 100%;
   height: auto;
   font-size: small;
   overflow-y: hidden;

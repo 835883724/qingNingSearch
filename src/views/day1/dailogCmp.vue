@@ -8,6 +8,11 @@
         <div class="titleText">
           更换壁纸
         </div>
+        <div class="bgPictrue">
+          <img src="@/assets/day1Bg.jpg" alt="" class="mt30 imgCls">
+          <img src="@/assets/day1Bg.jpg" alt="" class="mt30 imgCls">
+          <img src="@/assets/day1Bg.jpg" alt="" class="mt30 imgCls">
+        </div>
       </div>
     </div>
   </div>
@@ -56,9 +61,11 @@ onMounted(() => {})
 <style scoped lang='scss'>
 @keyframes ball {
   0% {
-    transform: rotate3d(1, 1, 0, 20deg);
+    transform: rotate3d(1, 1, 0, -30deg);
   }
-
+  50% {
+    transform: rotate3d(1, 1, 0, 10deg);
+  }
   100% {
     transform: rotate3d(1, 1, 0, 0deg);
   }
@@ -88,7 +95,7 @@ onMounted(() => {})
   animation-duration: 0.5s;
 }
 .dialogBoxRotate {
-  transform: rotate3d(1, 1, 0, 10deg);
+  transform: rotate3d(1, 1, 0, 15deg);
   transition: 0.3s;
 }
 .close {
@@ -106,6 +113,16 @@ onMounted(() => {})
   padding: 0 50px;
   .titleText {
     font-size: 32px;
+  }
+}
+.bgPictrue {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  .imgCls {
+    width: 150px;
+    height: 100px;
+    border-radius: 10px;
   }
 }
 </style>
