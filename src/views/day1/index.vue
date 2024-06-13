@@ -136,6 +136,7 @@ body,
   transform: translate(-50%, 0);
   font-size: 42px;
   text-shadow: 3px;
+  transition: 0.3s;
   &:hover {
     font-size: 52px;
     transition: 0.3s;

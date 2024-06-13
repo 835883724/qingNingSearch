@@ -9,8 +9,8 @@
           更换壁纸
         </div>
         <div class="bgPictrue">
-          <img src="@/assets/day1Bg.jpg" alt="" class="mt30 imgCls">
-          <img src="@/assets/day1Bg.jpg" alt="" class="mt30 imgCls">
+          <img src="@/assets/day1Bg.jpg" alt="萨达" class="mt30 imgCls">
+          <img src="@/assets/day1Bg.jpg" alt="速速速速速速" class="mt30 imgCls">
           <img src="@/assets/day1Bg.jpg" alt="" class="mt30 imgCls">
         </div>
       </div>
@@ -22,6 +22,7 @@
 <script setup >
 import { ref, reactive, onMounted, nextTick } from 'vue'
 import { watch } from '@vue/runtime-core'
+
 const props = defineProps({
   showDialog: {
     type: Boolean,
