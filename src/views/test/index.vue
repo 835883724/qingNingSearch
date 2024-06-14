@@ -1,6 +1,7 @@
 <template>
   <div class="test">
     <input type="file" @change="handleFileChange" />
+    <button @click="sendMessage">发送</button>
   </div>
 </template>
 
@@ -8,18 +9,48 @@
 import { ref, reactive } from 'vue'
 import axios from 'axios'
 import CryptoJS from 'crypto-js'
+import { io } from 'socket.io-client'
 
 const state = reactive({
-  apiKey: '16B5C109FB124BE199705178982AFF01',
-  secretKey: '08E126407ACA40ED947246EB4B5ED3DA',
-  traceId: '',
+  url: 'wss://150.223.245.42/csrobot/cschannels/openapi/ws/asr',
+  apiKey: '01181FDFBDE844C8B88218579135671A',
+  secretKey: '0787601D72E54F63A85BE4F8389FD868',
+  traceId: Math.random(),
   timestamp: Date.now(),
-  resultHeader: ''
+  resultHeader: '',
+  websock: null
 })
+const sendMessage = () => {
+  state.websock.send(
+    JSON.stringify({
+      req_id: Math.random,
+      rec_status: 0
+    })
+  )
+}
+
 const handleaaa = () => {
   console.log(state.timestamp, 'timestamp')
   state.resultHeader = CryptoJS.SHA256(state.apiKey + '-' + state.secretKey + '-' + state.traceId + '-' + state.timestamp).toString()
+  state.allurl = `${state.url}?apiKey=${state.apiKey}&appSign=${state.resultHeader}&traceId=${state.traceId}&timestamp=${state.timestamp}`
 }
+// handleaaa()
+const openWebsocket = () => {
+  console.log('链接成功')
+}
+const onMessage = e => {
+  console.log(`接受数据`, e.data)
+}
+const createClient = () => {
+  console.log(state.allurl, 'state.allurl')
+  state.websock = new WebSocket(state.allurl)
+
+  state.websock.onopen = openWebsocket()
+  state.websock.onmessage = function (e) {
+    onMessage(e)
+  }
+}
+// createClient()
 
 const handleFileChange = async event => {
   const file = event.target.files[0]
