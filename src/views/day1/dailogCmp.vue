@@ -10,7 +10,7 @@
         </div>
         <div class="bgPictrue">
           <img src="@/assets/day1Bg.jpg" alt="萨达" class="mt30 imgCls">
-          <img src="@/assets/day1Bg.jpg" alt="速速速速速速" class="mt30 imgCls">
+          <img src="@/assets/bg1.jpeg" ref="imgPic" alt="速速速速速速" class="mt30 imgCls" @click="changeBg">
           <img src="@/assets/day1Bg.jpg" alt="" class="mt30 imgCls">
         </div>
       </div>
@@ -29,7 +29,8 @@ const props = defineProps({
     default: false
   }
 })
-const emit = defineEmits(['update:showDialog'])
+const emit = defineEmits(['update:showDialog', 'bgChange'])
+const imgPic = ref(null)
 const hoverButton = ref(null)
 const fatherElement = ref(null)
 const state = reactive({
@@ -56,6 +57,9 @@ watch(
   }
 )
 
+const changeBg = () => {
+  emit('bgChange', '@/assets/bg1.jpeg')
+}
 onMounted(() => {})
 </script>
 
@@ -124,6 +128,7 @@ onMounted(() => {})
     width: 150px;
     height: 100px;
     border-radius: 10px;
+    cursor: pointer;
   }
 }
 </style>

@@ -12,9 +12,9 @@ import CryptoJS from 'crypto-js'
 import { io } from 'socket.io-client'
 
 const state = reactive({
-  url: 'wss://150.223.245.42/csrobot/cschannels/openapi/ws/asr',
-  apiKey: '01181FDFBDE844C8B88218579135671A',
-  secretKey: '0787601D72E54F63A85BE4F8389FD868',
+  url: 'https://150.223.245.42/csrobot/cschannels/openapi/voice/asr?apiKey=16B5C109FB124BE199705178982AFF01',
+  apiKey: '16B5C109FB124BE199705178982AFF01',
+  secretKey: '08E126407ACA40ED947246EB4B5ED3DA',
   traceId: Math.random(),
   timestamp: Date.now(),
   resultHeader: '',

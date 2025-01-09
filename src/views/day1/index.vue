@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container" :class=" state.inputFlag ? 'contanierShadow':'' "></div>
+  <div class="container" :class=" state.inputFlag ? 'contanierShadow':'' " ref="bgContainer"></div>
   <div class="timeBox curp">{{ state.currentTime }}</div>
   <div class="contentBox">
     <div class="searchBox" :class=" state.inputFlag ? 'inputActived':''">
@@ -24,7 +24,7 @@
     <span class="textItem">闽公网安备35010202001376号</span>
   </div>
 
-  <dailogCmp v-model:showDialog="state.showDialog"></dailogCmp>
+  <dailogCmp v-model:showDialog="state.showDialog" @bgChange="chageBg"></dailogCmp>
 
 </template>
 
@@ -33,6 +33,7 @@ import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import dayjs from 'dayjs'
 import dailogCmp from './dailogCmp.vue'
 
+const bgContainer = ref(null)
 const state = reactive({
   inputFlag: false,
   iconShow: false,
@@ -72,6 +73,10 @@ const updateTime = () => {
 const changeFlag = e => {
   state.inputFlag = true
   state.iconShow = true
+}
+const chageBg = e => {
+  console.log(e, 'eeeeeeeeeeee')
+  bgContainer.value.style.backgroundImage = `url(../../assets/bg1.jpeg)`
 }
 </script>
 
