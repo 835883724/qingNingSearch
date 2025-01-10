@@ -9,9 +9,12 @@
           更换壁纸
         </div>
         <div class="bgPictrue">
-          <img src="@/assets/day1Bg.jpg" alt="萨达" class="mt30 imgCls">
-          <img src="@/assets/bg1.jpeg" ref="imgPic" alt="速速速速速速" class="mt30 imgCls" @click="changeBg">
-          <img src="@/assets/day1Bg.jpg" alt="" class="mt30 imgCls">
+          <img src="@/assets/bg1.jpeg" alt="春" class="mt30 imgCls" @click="changeBg(1)">
+          <img src="@/assets/bg2.jpeg" alt="夏" class="mt30 imgCls" @click="changeBg(2)">
+          <img src="@/assets/bg3.jpeg" alt="秋" class="mt30 imgCls" @click="changeBg(3)">
+          <img src="@/assets/bg4.jpeg" alt="冬" class="mt30 imgCls" @click="changeBg(4)">
+          <img src="@/assets/bg5.jpeg" alt="冬" class="mt30 imgCls" @click="changeBg(5)">
+          <img src="@/assets/bg6.jpeg" alt="冬" class="mt30 imgCls" @click="changeBg(6)">
         </div>
       </div>
     </div>
@@ -30,7 +33,6 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['update:showDialog', 'bgChange'])
-const imgPic = ref(null)
 const hoverButton = ref(null)
 const fatherElement = ref(null)
 const state = reactive({
@@ -57,8 +59,8 @@ watch(
   }
 )
 
-const changeBg = () => {
-  emit('bgChange', '@/assets/bg1.jpeg')
+const changeBg = params => {
+  emit('bgChange', params)
 }
 onMounted(() => {})
 </script>
@@ -129,6 +131,11 @@ onMounted(() => {})
     height: 100px;
     border-radius: 10px;
     cursor: pointer;
+    &:hover {
+      box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
+      transform: scale(1.05);
+      transition: 0.3s;
+    }
   }
 }
 </style>

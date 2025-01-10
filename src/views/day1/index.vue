@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container" :class=" state.inputFlag ? 'contanierShadow':'' " ref="bgContainer"></div>
+  <div class="container" :class=" state.inputFlag ? 'contanierShadow':'' " :style="{backgroundImage:`url(${state.imgPath})` }" ref="bgContainer"></div>
   <div class="timeBox curp">{{ state.currentTime }}</div>
   <div class="contentBox">
     <div class="searchBox" :class=" state.inputFlag ? 'inputActived':''">
@@ -13,15 +13,15 @@
       </el-icon>
     </div>
     <div class="searchSuggest" :class="state.inputValue.length>0&& state.showDialog==false? 'suggestChange':''">
-      <div>我草泥马</div>
-      <div>123</div>
-      <div>123</div>
+      <div>测试1</div>
+      <div>测试12</div>
+      <div>12321</div>
     </div>
   </div>
 
   <div class="footer">
-    <span class="textItem"> 闽ICP备16025935号-2 </span> |
-    <span class="textItem">闽公网安备35010202001376号</span>
+    <span class="textItem"> 闽ICP备16233322号-2 </span> |
+    <span class="textItem">闽公网安备35011123231376号</span>
   </div>
 
   <dailogCmp v-model:showDialog="state.showDialog" @bgChange="chageBg"></dailogCmp>
@@ -32,6 +32,7 @@
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import dayjs from 'dayjs'
 import dailogCmp from './dailogCmp.vue'
+import fristImg from '../../assets/bg6.jpeg'
 
 const bgContainer = ref(null)
 const state = reactive({
@@ -40,7 +41,8 @@ const state = reactive({
   currentTime: '',
   timer: null,
   inputValue: '',
-  showDialog: false
+  showDialog: false,
+  imgPath: fristImg
 })
 const listenClick = e => {
   // console.log(typeof e.target.className, 222)
@@ -76,7 +78,9 @@ const changeFlag = e => {
 }
 const chageBg = e => {
   console.log(e, 'eeeeeeeeeeee')
-  bgContainer.value.style.backgroundImage = `url(../../assets/bg1.jpeg)`
+  import(`../../assets/bg${e}.jpeg`).then(p => {
+    state.imgPath = p.default
+  })
 }
 </script>
 
@@ -92,7 +96,7 @@ body,
   height: 100%;
   overflow: hidden;
   object-fit: cover;
-  background-image: url('@/assets/day1Bg.jpg');
+  // background-image: url('@/assets/day1Bg.jpg');
   background-size: 100% 100%;
   transition: 0.3s;
 }
