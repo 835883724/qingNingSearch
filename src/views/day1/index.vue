@@ -18,10 +18,10 @@
       <div>12321</div>
     </div>
   </div>
-  <div class="footerTop">
-    <div class="footerTop-item" v-for="item,index in state.kjCard" :key="index" @click="fastTo(item)">
-      <div style="font-size: 35px;font-weight: bold;">{{item.key}}</div>
-      <div style="width: 90%;overflow: hidden;">{{item.content}}</div>
+  <div class="footerTop" v-if="state.inputFlag==false">
+    <div class="footerTop-item" v-for="item,index in state.kjCard" :key="index" @click="fastTo(item)" title="键盘按下快捷导航哦">
+      <div style="font-size: 35px;font-weight: bold;" :title="item.key">{{item.key}}</div>
+      <div style="width: 90%;overflow: hidden;" :title="item.content">{{item.content}}</div>
       <el-icon class="closeIcon" @click.stop="spliceArr(index)" v-show="item.content!=='新增网站'">
         <Close />
       </el-icon>
@@ -68,6 +68,7 @@ const listenClick = e => {
     state.inputFlag = false
     state.iconShow = false
     state.inputValue = ''
+    window.addEventListener('keydown', handleKeydown)
   }
 }
 onMounted(() => {
@@ -91,6 +92,7 @@ const updateTime = () => {
   // console.log(state.currentTime)
 }
 const changeFlag = e => {
+  window.removeEventListener('keydown', handleKeydown)
   state.inputFlag = true
   state.iconShow = true
 }
@@ -105,7 +107,10 @@ const toBaiDu = () => {
 }
 const fastTo = item => {
   if (item.content == '新增网站') {
-    console.log(123)
+    let addString = prompt('请输入要添加的网站地址,键盘按下可快捷导航哦：', '')
+    if (addString) {
+      state.kjCard.unshift({ key: addString[0].toUpperCase(), content: addString })
+    }
   } else {
     window.open(`https://www.${item.content}`, '_blank')
   }
@@ -236,6 +241,7 @@ body,
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    overflow: hidden;
   }
 }
 .closeIcon {
