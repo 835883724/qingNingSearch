@@ -7,8 +7,8 @@
       <el-icon :size="20" class="ml20 iconCls" :class="state.iconShow? 'iconShow':''" @click="state.showDialog=true">
         <PictureFilled />
       </el-icon>
-      <input type="text" class="inputCls" :placeholder=" state.inputFlag ?'':'搜索'" @click="changeFlag(e)" v-model="state.inputValue">
-      <el-icon :size="20" class="mr20 iconCls" :class="state.iconShow? 'iconShow':''">
+      <input type="text" class="inputCls" :placeholder=" state.inputFlag ?'':'搜索'" @click="changeFlag(e)" v-model="state.inputValue" @keyup.enter="toBaiDu">
+      <el-icon :size="20" class="mr20 iconCls" :class="state.iconShow? 'iconShow':''" @click="toBaiDu">
         <Search />
       </el-icon>
     </div>
@@ -18,7 +18,15 @@
       <div>12321</div>
     </div>
   </div>
-
+  <div class="footerTop">
+    <div class="footerTop-item" v-for="item,index in state.kjCard" :key="index" @click="fastTo(item)">
+      <div style="font-size: 35px;font-weight: bold;">{{item.key}}</div>
+      <div style="width: 90%;overflow: hidden;">{{item.content}}</div>
+      <el-icon class="closeIcon" @click.stop="spliceArr(index)" v-show="item.content!=='新增网站'">
+        <Close />
+      </el-icon>
+    </div>
+  </div>
   <div class="footer">
     <span class="textItem"> 闽ICP备16233322号-2 </span> |
     <span class="textItem">闽公网安备35011123231376号</span>
@@ -42,7 +50,15 @@ const state = reactive({
   timer: null,
   inputValue: '',
   showDialog: false,
-  imgPath: fristImg
+  imgPath: fristImg,
+  kjCard: [
+    { key: 'Y', content: 'youku.com' },
+    { key: 'B', content: 'bilibili.com' },
+    { key: 'I', content: 'iqiyi.com' },
+    { key: 'S', content: 'sohu.com' },
+    { key: 'L', content: 'le.com' },
+    { key: '+', content: '新增网站' }
+  ]
 })
 const listenClick = e => {
   // console.log(typeof e.target.className, 222)
@@ -56,6 +72,7 @@ const listenClick = e => {
 }
 onMounted(() => {
   window.addEventListener('click', listenClick)
+  window.addEventListener('keydown', handleKeydown)
   // 初始化当前时间
   updateTime()
   // 每秒更新时间
@@ -63,6 +80,7 @@ onMounted(() => {
 })
 onUnmounted(() => {
   window.removeEventListener('click', listenClick)
+  window.removeEventListener('keydown', handleKeydown)
   if (state.timer) {
     clearTimeout(state.timer)
     state.timer = null
@@ -81,6 +99,25 @@ const chageBg = e => {
   import(`../../assets/bg${e}.jpeg`).then(p => {
     state.imgPath = p.default
   })
+}
+const toBaiDu = () => {
+  window.open('https://www.baidu.com', '_blank')
+}
+const fastTo = item => {
+  if (item.content == '新增网站') {
+    console.log(123)
+  } else {
+    window.open(`https://www.${item.content}`, '_blank')
+  }
+}
+const spliceArr = index => {
+  state.kjCard.splice(index, 1)
+}
+const handleKeydown = event => {
+  // console.log(event.key, 2222)
+  const myKey = event.key.toUpperCase()
+  const foundItem = state.kjCard.find(item => item.key === myKey)
+  window.open(`https://www.${foundItem.content}`, '_blank')
 }
 </script>
 
@@ -102,7 +139,7 @@ body,
 }
 .contentBox {
   position: fixed;
-  top: 30%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, 0);
 }
@@ -140,14 +177,14 @@ body,
 .timeBox {
   // width: 100%;
   position: fixed;
-  top: 20%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%, 0);
-  font-size: 42px;
+  font-size: 45px;
   text-shadow: 3px;
   transition: 0.3s;
   &:hover {
-    font-size: 52px;
+    font-size: 54px;
     transition: 0.3s;
   }
 }
@@ -173,6 +210,40 @@ body,
   &:hover {
     background: #fff;
   }
+}
+.footerTop {
+  width: 45%;
+  height: 300px;
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  .footerTop-item {
+    position: relative;
+    width: 150px;
+    height: 130px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 1px gray;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+}
+.closeIcon {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  visibility: hidden;
+}
+.footerTop-item:hover .closeIcon {
+  visibility: visible; /* 鼠标移入时显示 */
 }
 .footer {
   position: fixed;
