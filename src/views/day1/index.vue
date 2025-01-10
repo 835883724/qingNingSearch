@@ -114,10 +114,12 @@ const spliceArr = index => {
   state.kjCard.splice(index, 1)
 }
 const handleKeydown = event => {
-  // console.log(event.key, 2222)
+  console.log(event.key, 2222)
   const myKey = event.key.toUpperCase()
   const foundItem = state.kjCard.find(item => item.key === myKey)
-  window.open(`https://www.${foundItem.content}`, '_blank')
+  if (foundItem) {
+    window.open(`https://www.${foundItem.content}`, '_blank')
+  }
 }
 </script>
 
