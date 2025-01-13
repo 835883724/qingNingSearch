@@ -97,7 +97,7 @@ const changeFlag = e => {
   state.iconShow = true
 }
 const chageBg = e => {
-  console.log(e, 'eeeeeeeeeeee')
+  console.log(e, 'eeeeeeeeeeeee')
   import(`../../assets/bg${e}.jpeg`).then(p => {
     state.imgPath = p.default
   })
