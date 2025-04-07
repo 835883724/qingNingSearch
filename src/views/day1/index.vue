@@ -72,6 +72,13 @@ const listenClick = e => {
   }
 }
 onMounted(() => {
+  // 监听来自父页面的消息
+  window.addEventListener('message', event => {
+    if (event.origin === 'http://localhost:7999') {
+      // 验证消息来源
+      console.log('从父页面接收到消息:', event.data)
+    }
+  })
   window.addEventListener('click', listenClick)
   window.addEventListener('keydown', handleKeydown)
   // 初始化当前时间
@@ -103,7 +110,9 @@ const chageBg = e => {
   })
 }
 const toBaiDu = () => {
-  window.open('https://www.baidu.com', '_blank')
+  const message = { text: '我是子页面：我发给父页面了一条消息' }
+  window.parent.postMessage(message, '*')
+  // window.open('https://www.baidu.com', '_blank')
 }
 const fastTo = item => {
   if (item.content == '新增网站') {
